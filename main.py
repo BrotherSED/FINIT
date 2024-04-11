@@ -22,39 +22,23 @@ logging.basicConfig(level=logging.INFO, filename="c://soft//FINIT log//log.log",
 
 # Описание глобальных переменных
 NOTE_INFO = {}
-USERS_DICT = {'ahmadullin': 'Роман Ахмадуллин',
-              'aleksskull': 'Александр Черепенин',
-              'alex_adm': 'Александр Новосёлов',
-              'ares': 'Михаил Табильский',
-              'armoredfail': 'Павел Семёнов',
-              'babikov': 'Дмитрий Бабиков',
-              'cherepanov_m': 'Михаил Черепанов',
-              'crash': 'Алексей Крашенинников',
-              'dementev_e': 'Евгений Дементьев',
-              'fortis': 'Сергей Фортис',
-              'glazyrin': 'Евгений Глазырин',
-              'glinsky': 'Евгений Глинских',
-              'grenor': 'Алексей Щербаков',
-              'haliullin': 'Эдуард Халиуллин',
-              'ivanov_s': 'Семён Иванов',
-              'iskakov': 'Халит Искаков',
-              'barybin': 'Денис Барыбин',
-              'panihin': 'Вячеслав Панихин',
-              'rogatskiyi': 'Александр Рогацкий',
-              'smoke': 'Алексей Марков',
-              'usr3111': 'Гризель Денис',
-              'usr3443': 'Александр Никулин'}
+USERS_DICT = {} # Тут хранился словарь с пользователями, опциональая вещь 
 USER = ''
 DSC = ''
 DSC_2 = ''
-VAULT_ID = "60f68e57917ddf485e648823"       # TEST BASE:            "654c7b281915343bf564137d"  REAL BASE:          "60f68e57917ddf485e648823"
-OO_FOLDER = "641d9cdec31d255d93601453"     # TEST OO_FOLDER:       "654c7b3bfe1c4761b94d1b35"  REAL OO_FOLDER:     "641d9cdec31d255d93601453"
-TOCHKA_FOLDER = "64181b053a00c740583fc0f4"  # TEST TOCHKA_FOLDER:   "654c7b331915343bf564139b"  REAL TOCHKA_FOLDER: "64181b053a00c740583fc0f4"
-WN_FOLDER = "6559eec8fcf15c15624c8fa7"      # TEST WN_FOLDER:       "654c7b466d239062ee61dee5"  REAL WN_FOLDER:     "6559eec8fcf15c15624c8fa7"
-URL = 'https://194.107.116.186/api/v4'
+
+# ID 
+VAULT_ID = ""       
+OO_FOLDER = ""     
+TOCHKA_FOLDER = ""  
+WN_FOLDER = ""  
+ADM_ID = ""
+
+# Прочие переменные
+URL = ''
 TOKEN = ''
 KEY_LOCATION = [r'C:\API_KEY.txt', r'D:\API_KEY.txt', r'E:\API_KEY.txt', r'F:\API_KEY.txt', r'G:\API_KEY.txt', r'H:\API_KEY.txt', r'I:\API_KEY.txt', r'M:\API_KEY.txt', r'J:\API_KEY.txt', r'Z:\API_KEY.txt', r'X:\API_KEY.txt']
-ADM_ID = '63e3782750492875340e93e4'
+
 
 
 # Создание учетной записи Windows
@@ -168,7 +152,7 @@ def auth():
         os._exit(0)
 
 
-# Получение времени (почему-то всегда отрабатывает только локальное время)
+# Получение времени
 def get_time():
     logging.info('get_time()')
     try:
@@ -342,7 +326,7 @@ def adm_pass():
         r = get(URL + action, headers=head, verify=False).json()
         if r['status'] == 'success':
             password = b64decode(r['data']['cryptedPassword']).decode('utf-8')
-            logging.info('Пароль администратора успешно получен, но в логи я его не напишу :P')
+            logging.info('Пароль администратора успешно получен')
             subprocess.run(f"net user Administrator {password}", shell=True)
             logging.info('Пароль администратора успешно изменен')
         else:
@@ -354,7 +338,7 @@ def adm_pass():
         logging.error("", exc_info=True)
 
 
-# Получение последних ноутбуков в папках Tochka и OO
+# Получение последних ноутбуков в папках
 def get_last():
     logging.info('get_last():')
     try:
